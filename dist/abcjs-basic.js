@@ -15557,6 +15557,7 @@ function buildPatterns(self) {
     }
     strings[pos--] = stringNotes;
   }
+  console.log(strings);
   return strings;
 }
 function buildSecond(first) {
@@ -15636,7 +15637,9 @@ function noteToNumber(self, note, stringNumber, secondPosition, firstSize) {
   }
   return null;
 }
+// this is the place! (JTT)
 function toNumber(self, note) {
+  console.log("Here I am");
   if (note.isAltered || note.natural) {
     var acc;
     if (note.isFlat) {
@@ -15646,23 +15649,30 @@ function toNumber(self, note) {
     } else if (note.natural) acc = "=";
     self.measureAccidentals[note.name.toUpperCase()] = acc;
   }
-  for (var i = self.stringPitches.length - 1; i >= 0; i--) {
-    if (note.pitch + note.pitchAltered >= self.stringPitches[i]) {
-      var num = note.pitch + note.pitchAltered - self.stringPitches[i];
-      if (note.quarter === '^') num -= 0.5;else if (note.quarter === "v") num += 0.5;
-      return {
-        num: Math.round(num),
-        str: self.stringPitches.length - 1 - i,
-        // reverse the strings because string 0 is on the bottom
-        note: note
-      };
-    }
-  }
-  return {
+  var min_num = 1000;
+  result = {
     num: "?",
     str: self.stringPitches.length - 1,
     note: note
   };
+  for (var i = self.stringPitches.length - 1; i >= 0; i--) {
+    if (note.pitch + note.pitchAltered >= self.stringPitches[i]) {
+      console.log(note.pitch, note.pitchAltered, self.stringPitches[i]);
+      var num = note.pitch + note.pitchAltered - self.stringPitches[i];
+      if (note.quarter === '^') num -= 0.5;else if (note.quarter === "v") num += 0.5;
+      console.log(num, min_num);
+      if (num < min_num) {
+        min_num = num;
+        var result = {
+          num: Math.round(num),
+          str: self.stringPitches.length - 1 - i,
+          // reverse the strings because string 0 is on the bottom
+          note: note
+        };
+      }
+    }
+  }
+  return result;
 }
 StringPatterns.prototype.stringToPitch = function (stringNumber) {
   var startingPitch = 5.3;
@@ -16104,6 +16114,7 @@ module.exports = {
 var TabNote = __webpack_require__(/*! ./tab-note */ "./src/tablatures/instruments/tab-note.js");
 var notes = TabNote.notes;
 function TabNotes(fromNote, toNote) {
+  console.log(fromNote, toNote);
   this.fromN = new TabNote.TabNote(fromNote);
   this.toN = new TabNote.TabNote(toNote);
 }
@@ -16132,6 +16143,7 @@ TabNotes.prototype.build = function () {
       finished = true;
     }
   }
+  console.log(buildReturned);
   return buildReturned;
 };
 module.exports = TabNotes;

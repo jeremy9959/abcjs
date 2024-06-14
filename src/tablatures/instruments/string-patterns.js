@@ -38,6 +38,7 @@ function buildPatterns(self) {
     }
     strings[pos--] = stringNotes;
   }
+  console.log(strings)
   return strings;
 }
 
@@ -133,8 +134,9 @@ function noteToNumber(self, note, stringNumber, secondPosition , firstSize) {
   }
   return null;
 }
-
+// this is the place! (JTT)
 function toNumber(self, note) {
+  console.log("Here I am") ; 
   if (note.isAltered || note.natural) {
     var acc;
     if (note.isFlat) {
@@ -151,23 +153,26 @@ function toNumber(self, note) {
       acc = "="
     self.measureAccidentals[note.name.toUpperCase()] = acc  
   }
+  var min_num = 1000; 
+  result  = {num: "?", str: self.stringPitches.length-1, note:note,};
   for (var i = self.stringPitches.length-1; i >= 0; i--) {
     if (note.pitch + note.pitchAltered >= self.stringPitches[i]) {
+      console.log(note.pitch,note.pitchAltered,self.stringPitches[i]);
       var num = note.pitch + note.pitchAltered - self.stringPitches[i]
       if (note.quarter === '^') num -= 0.5
       else if (note.quarter === "v") num += 0.5
-      return {
-        num: Math.round(num),
-        str: self.stringPitches.length-1-i, // reverse the strings because string 0 is on the bottom
-        note: note
+      console.log(num,min_num)
+      if (num<min_num) {
+        min_num = num
+        var result = {
+          num: Math.round(num),
+          str: self.stringPitches.length-1-i, // reverse the strings because string 0 is on the bottom
+          note: note
+        }
+      }
       }
     }
-  }
-  return {
-    num: "?",
-    str: self.stringPitches.length-1,
-    note: note,
-  };
+    return result;
 }
 
 StringPatterns.prototype.stringToPitch = function (stringNumber) {
