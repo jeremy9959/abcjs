@@ -94,6 +94,7 @@ function sameString(self, chord) {
 
 function handleChordNotes(self, notes) {
   var retNotes = [];
+  console.log("chord notes:",notes)
   for (var iiii = 0; iiii < notes.length; iiii++) {
     if (notes[iiii].endTie)
       continue;
@@ -136,7 +137,7 @@ function noteToNumber(self, note, stringNumber, secondPosition , firstSize) {
 }
 // this is the place! (JTT)
 function toNumber(self, note) {
-  console.log("Here I am") ; 
+  console.log("Here I am - 2") ; 
   if (note.isAltered || note.natural) {
     var acc;
     if (note.isFlat) {
@@ -196,6 +197,7 @@ StringPatterns.prototype.notesToNumber = function (notes, graces) {
   var number;
   var error = null; 
   var retNotes = null;
+  console.log('notesToNumber:', notes)
   if (notes) {
     retNotes = [];
     if (notes.length > 1) {
