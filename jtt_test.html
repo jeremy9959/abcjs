@@ -1,17 +1,22 @@
 <!DOCTYPE html>
+
 <head>
   <link rel="stylesheet" href="examples/examples-styles.css" />
   <script src="dist/abcjs-basic.js" type="text/javascript"></script>
   <script type="text/javascript">
     var abc = "X:1\nL:1/4\n [|[G,CEGc]AGABcef|GCDGABcd|efgGCDEA:|]\n";
 
+
     function load() {
       ABCJS.renderAbc("paper", abc, {
-        tablature: [{ instrument: "guitar", label: "Guitar" }],
+        tablature: [{
+          instrument: "fiveString", label: "banjo", tuning: ["D,", "G,", "B", "D", "G"],
+        }],
       });
     }
   </script>
 </head>
+
 <body onload="load()">
   <div class="container">
     <div id="paper"></div>
