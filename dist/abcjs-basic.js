@@ -16131,6 +16131,7 @@ TabNotes.prototype.build = function () {
       error: 'Invalid string Instrument tuning : ' + tn + ' string lower than ' + from + ' string'
     };
   }
+  console.log("Building TabNotes");
   var buildReturned = [];
   var startIndex = notes.indexOf(fromN.name);
   var toIndex = notes.indexOf(toN.name);

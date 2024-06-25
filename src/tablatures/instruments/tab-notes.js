@@ -4,7 +4,7 @@ var TabNote = require('./tab-note');
 var notes = TabNote.notes;
 
 function TabNotes(fromNote, toNote) {
-  console.log(fromNote,toNote);
+  console.log(fromNote, toNote);
   this.fromN = new TabNote.TabNote(fromNote);
   this.toN = new TabNote.TabNote(toNote);
 }
@@ -22,6 +22,7 @@ TabNotes.prototype.build = function () {
         tn + ' string lower than ' + from + ' string'
     };
   }
+  console.log("Building TabNotes")
   var buildReturned = [];
   var startIndex = notes.indexOf(fromN.name);
   var toIndex = notes.indexOf(toN.name);
