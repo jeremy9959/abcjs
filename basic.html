@@ -11,20 +11,20 @@
 	<title>abcjs: Basic Demo</title>
 	<script src="../dist/abcjs-basic.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		var abc = 'T: Whiskey Before Breakfast\n' +
-			'R: reel\n' +
-			'M: 4/4\n' +
-			'L: 1/8\n' +
-			'K: Dmaj\n' +
-			'"D"DEFG A2 D2|ABAG FDEF|"G"G2 BG "D"F2 AF|"A"EDEF E2 E2|\n' +
-			'"D"DEFG A2 D2|ABAG FDEF|"G"G2 BG "D"F2 AF|1 "A"EDEF "D"D2 z2:|2 "A"EDEF "D"D2 AB||\n' +
-			'"D"d2 dd dBAB|dBAF ED Ad|"Em"e2 ee e2 ef|gfed "A"cABc|\n' +
-			'"D"dfed "A"cedc|"G"BcdB "D"AFED|"G"GBAG "D"FAGF|1 "A"EDEF "D"D2 AB:|2 "A"EDEF "D"D2 z2||\n\n'
+		var abc = "X:1\n" +
+			"T:Speed the Plough\n" +
+			"M:4/4\n"+
+			"C:Trad.\n" +
+			"K:G\n" +
+			"|:GABc dedB|dedB dedB|c2ac B2dB|c2A2 A2BA|\n" +
+			"  GABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|\n"+
+			"|:g2gf gdBd|g2f2 e2d2|c2ec B2dB|c2A2 A2df|\n"+
+			"  g2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|\n\n"
 
 
 
 		function load() {
-			ABCJS.renderAbc("paper", abc, { tablature: [{ instrument: "banjo", tuning: ["D", "A", 'd', 'e', 'a'], }] });
+			ABCJS.renderAbc("paper", abc, { tablature: [{ instrument: "banjo", tuning: ["D", "A", 'd', 'e', 'a'], fretOffset: [0,0,0,0,5]}] });
 		}
 
 	</script>

@@ -162,11 +162,13 @@ function convertToNumber(plugin, pitches, graceNotes) {
   //JTT: use string order here
   if (tabPos.notes) {
     for (let note of tabPos.notes) {
+      note.num = note.num + plugin.semantics.strings.fretOffset[4 - note.str]
       note.str = plugin.semantics.strings.strOrder[note.str];
     }
   };
   if (tabPos.graces) {
     for (let note of tabPos.graces) {
+      note.num = note.num + plugin.semantics.strings.fretOffset[4 - note.str]
       note.str = plugin.semantics.strings.strOrder[note.str];
     }
   };

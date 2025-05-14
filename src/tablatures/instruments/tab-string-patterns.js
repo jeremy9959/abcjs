@@ -3,6 +3,8 @@ var StringPatterns = require('./string-patterns');
 function TabStringPatterns(plugin, defaultTuning, defaultStrOrder) {
   this.tuning = plugin._super.params.tuning;
   this.strOrder = plugin._super.params.strOrder;
+  this.fretOffset = plugin._super.params.fretOffset;
+
   if (!this.tuning) {
     this.tuning = defaultTuning;
   }
@@ -15,7 +17,11 @@ function TabStringPatterns(plugin, defaultTuning, defaultStrOrder) {
       this.strOrder = defaultStrOrder;
     }
   }
+  if (!this.fretOffset) {
+    this.fretOffset = new Array(this.tuning.length).fill(0);
+  }
   plugin.strOrder = this.strOrder;
+  plugin.fretOffset = this.fretOffset;
   this.strings = new StringPatterns(plugin);
 }
 

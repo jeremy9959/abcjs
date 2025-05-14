@@ -246,6 +246,7 @@ var pluginTab = {
     name: 'StringTab',
     defaultTuning: ['D', 'G', 'B', 'd', 'g'],
     strOrder: [4, 0, 1, 2, 3],
+    fretOffset: [0, 0, 0, 0, 5],
     isTabBig: true,
     tabSymbolOffset: -.95
   }
@@ -16053,6 +16054,7 @@ function StringPatterns(plugin) {
   // second position pattern per string
   this.secondPos = buildSecond(this);
   this.strOrder = plugin.strOrder;
+  this.fretOffset = plugin.fretOffset;
 }
 ;
 module.exports = StringPatterns;
@@ -16404,6 +16406,7 @@ var StringPatterns = __webpack_require__(/*! ./string-patterns */ "./src/tablatu
 function TabStringPatterns(plugin, defaultTuning, defaultStrOrder) {
   this.tuning = plugin._super.params.tuning;
   this.strOrder = plugin._super.params.strOrder;
+  this.fretOffset = plugin._super.params.fretOffset;
   if (!this.tuning) {
     this.tuning = defaultTuning;
   }
@@ -16415,7 +16418,11 @@ function TabStringPatterns(plugin, defaultTuning, defaultStrOrder) {
       this.strOrder = defaultStrOrder;
     }
   }
+  if (!this.fretOffset) {
+    this.fretOffset = new Array(this.tuning.length).fill(0);
+  }
   plugin.strOrder = this.strOrder;
+  plugin.fretOffset = this.fretOffset;
   this.strings = new StringPatterns(plugin);
 }
 TabStringPatterns.prototype.notesToNumber = function (notes, graces) {
@@ -16459,6 +16466,7 @@ Plugin.prototype.init = function (abcTune, tuneNumber, params, staffNumber, tabS
   this.transpose = params.visualTranspose;
   this.hideTabSymbol = params.hideTabSymbol;
   this.strOrder = params.strOrder;
+  this.fretOffset = params.fretOffset;
   this.tablature = new StringTablature(this.nbLines, this.linePitch);
   var semantics = new TabStringPatterns(this, tabSettings.defaultTuning, tabSettings.strOrder);
   this.semantics = semantics;
@@ -16654,6 +16662,7 @@ function convertToNumber(plugin, pitches, graceNotes) {
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var note = _step.value;
+        note.num = note.num + plugin.semantics.strings.fretOffset[4 - note.str];
         note.str = plugin.semantics.strings.strOrder[note.str];
       }
     } catch (err) {
@@ -16669,6 +16678,7 @@ function convertToNumber(plugin, pitches, graceNotes) {
     try {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var _note = _step2.value;
+        _note.num = _note.num + plugin.semantics.strings.fretOffset[4 - _note.str];
         _note.str = plugin.semantics.strings.strOrder[_note.str];
       }
     } catch (err) {

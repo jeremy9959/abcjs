@@ -23,6 +23,7 @@ Plugin.prototype.init = function (abcTune, tuneNumber, params, staffNumber, tabS
   this.transpose = params.visualTranspose;
   this.hideTabSymbol = params.hideTabSymbol;
   this.strOrder = params.strOrder;
+  this.fretOffset = params.fretOffset;
   this.tablature = new StringTablature(this.nbLines,
     this.linePitch);
   var semantics = new TabStringPatterns(this, tabSettings.defaultTuning, tabSettings.strOrder);

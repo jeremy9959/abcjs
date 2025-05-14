@@ -317,6 +317,7 @@ function StringPatterns(plugin) {
   // second position pattern per string
   this.secondPos = buildSecond(this);
   this.strOrder = plugin.strOrder;
+  this.fretOffset = plugin.fretOffset;
 };
 
 
