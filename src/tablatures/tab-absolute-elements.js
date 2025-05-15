@@ -157,29 +157,34 @@ function convertToNumber(plugin, pitches, graceNotes) {
   if (tabPos.error) {
     plugin._super.setError(tabPos.error);
     return tabPos; // give up on error here
-  };
+  }
 
   //JTT: use string order here
   if (tabPos.notes) {
     for (let note of tabPos.notes) {
-      note.num = note.num + plugin.semantics.strings.fretOffset[4 - note.str]
+      if (note.num > 0) {
+        note.num = note.num + plugin.semantics.strings.fretOffset[4 - note.str]
+      }
       note.str = plugin.semantics.strings.strOrder[note.str];
     }
   };
   if (tabPos.graces) {
     for (let note of tabPos.graces) {
-      note.num = note.num + plugin.semantics.strings.fretOffset[4 - note.str]
+      if (note.num > 0) {
+        note.num = note.num + plugin.semantics.strings.fretOffset[4 - note.str]
+
+      }
       note.str = plugin.semantics.strings.strOrder[note.str];
-    }
-  };
+    };
 
-  if (tabPos.graces && tabPos.notes) {
-    // add graces to last note in notes
-    var posNote = tabPos.notes.length - 1;
-    tabPos.notes[posNote].graces = tabPos.graces;
-  };
-
+    if (tabPos.graces && tabPos.notes) {
+      // add graces to last note in notes
+      var posNote = tabPos.notes.length - 1;
+      tabPos.notes[posNote].graces = tabPos.graces;
+    };
+  }
   return tabPos;
+
 }
 
 function buildGraceRelativesForRest(plugin, abs, absChild, graceNotes, tabVoice) {
@@ -312,6 +317,6 @@ TabAbsoluteElements.prototype.build = function (plugin,
         break;
     }
   }
-};
+}
 
 module.exports = TabAbsoluteElements;

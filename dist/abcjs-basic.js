@@ -16653,7 +16653,6 @@ function convertToNumber(plugin, pitches, graceNotes) {
     plugin._super.setError(tabPos.error);
     return tabPos; // give up on error here
   }
-  ;
 
   //JTT: use string order here
   if (tabPos.notes) {
@@ -16662,7 +16661,9 @@ function convertToNumber(plugin, pitches, graceNotes) {
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var note = _step.value;
-        note.num = note.num + plugin.semantics.strings.fretOffset[4 - note.str];
+        if (note.num > 0) {
+          note.num = note.num + plugin.semantics.strings.fretOffset[4 - note.str];
+        }
         note.str = plugin.semantics.strings.strOrder[note.str];
       }
     } catch (err) {
@@ -16678,7 +16679,9 @@ function convertToNumber(plugin, pitches, graceNotes) {
     try {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var _note = _step2.value;
-        _note.num = _note.num + plugin.semantics.strings.fretOffset[4 - _note.str];
+        if (_note.num > 0) {
+          _note.num = _note.num + plugin.semantics.strings.fretOffset[4 - _note.str];
+        }
         _note.str = plugin.semantics.strings.strOrder[_note.str];
       }
     } catch (err) {
@@ -16686,14 +16689,14 @@ function convertToNumber(plugin, pitches, graceNotes) {
     } finally {
       _iterator2.f();
     }
+    ;
+    if (tabPos.graces && tabPos.notes) {
+      // add graces to last note in notes
+      var posNote = tabPos.notes.length - 1;
+      tabPos.notes[posNote].graces = tabPos.graces;
+    }
+    ;
   }
-  ;
-  if (tabPos.graces && tabPos.notes) {
-    // add graces to last note in notes
-    var posNote = tabPos.notes.length - 1;
-    tabPos.notes[posNote].graces = tabPos.graces;
-  }
-  ;
   return tabPos;
 }
 function buildGraceRelativesForRest(plugin, abs, absChild, graceNotes, tabVoice) {
